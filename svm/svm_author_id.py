@@ -24,6 +24,32 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+from sklearn import svm
+
+clf = svm.SVC(kernel='rbf',C=10000)
+
+#features_train = features_train[:len(features_train)/100] 
+#labels_train = labels_train[:len(labels_train)/100] 
+
+t0 = time()
+clf.fit(features_train,labels_train)
+print "training time:", round(time()-t0, 3), "s"
+
+t1 = time()
+pred = clf.predict(features_test)
+print "predicting time:", round(time()-t1,3),"s"
+
+count = 0.0
+c_count = 0
+
+for x in range(len(pred)):
+	if pred[x] == labels_test[x]:
+		count += 1
+	if pred[x] == 1:
+		c_count += 1
+
+print count / len(pred)
+print c_count
 
 #########################################################
 
